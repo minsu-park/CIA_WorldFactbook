@@ -45,10 +45,12 @@ EXCEPTIONS = ('Burma', "Cote d'Ivoire", 'Curacao', 'European Union', 'Gaza Strip
 
 
 ## Read CIA's factbook page ##
+## Source: https://www.cia.gov/library/publications/the-world-factbook/fields/2010.html ##
 html_doc =  urllib.urlopen('https://www.cia.gov/library/publications/the-world-factbook/fields/2010.html')
 text = html_doc.read().decode("utf8")
 soup = BeautifulSoup(text, 'html.parser')
 locale.setlocale(locale.LC_ALL, 'en_US.UTF-8')
+
 
 ## Parse the html page ##
 d = {}
@@ -90,6 +92,7 @@ for item in soup.find_all('tr'):
                 d[country_id]['age_group'][age_g]['male'] = male_f
                 female_f = locale.atoi(line.strip().split('female ')[1].split(')')[0])
                 d[country_id]['age_group'][age_g]['female'] = female_f
+
 
 ## Save the outcome ##
 with open('./cia_factbook.json', 'w') as f:
